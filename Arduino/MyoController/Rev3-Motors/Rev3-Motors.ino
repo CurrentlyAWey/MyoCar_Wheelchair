@@ -1,9 +1,9 @@
 #include <MyoController.h>
 
-#define RM 3
-#define LM 9
-#define MIN_GATE 0//(255/5*1.25)
-#define MAX_GATE 255// (255/5*3)
+#define RM 9
+#define LM 3
+#define MIN_GATE 0//(255/5*0.95)
+#define MAX_GATE (255/5*3)
 #define FREQ 100
 
 MyoController myo = MyoController();
@@ -12,8 +12,8 @@ int LMC = MIN_GATE;
 int RMC = MIN_GATE;
 int a = LMC;
 int b = RMC;
-int st = 10;//(MAX_GATE-MIN_GATE)/(FREQ*3);
-int stB = 20;
+int st = 30;//(MAX_GATE - MIN_GATE) / (FREQ * 3);
+int stB = 60;
 
 void turnL() {
   if (LMC == RMC) {
@@ -21,13 +21,13 @@ void turnL() {
   }
 
   LMC = MIN_GATE;
-  RMC = MAX_GATE - 64;
+  RMC = MAX_GATE;
 }
 void turnR() {
   if (LMC == RMC) {
     a = b = LMC;
   }
-  LMC = MAX_GATE - 64;
+  LMC = MAX_GATE;
   RMC = MIN_GATE;
 }
 
@@ -56,8 +56,10 @@ void setup() {
   pinMode(RM , OUTPUT);
   pinMode(LM , OUTPUT);
   myo.initMyo();
-  digitalWrite(LM, LOW);
-  digitalWrite(RM, LOW);
+  analogWrite(LM, MIN_GATE);
+  analogWrite(RM, MIN_GATE);
+  //  digitalWrite(LM, LOW);
+  // digitalWrite(RM, LOW);
 }
 
 void loop()
